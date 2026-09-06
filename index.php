@@ -212,19 +212,25 @@
 
 
         /* ========================================
-           LOGO
+        LOGOS
         ======================================== */
 
         .logo-contenedor {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
             margin-bottom: 38px;
         }
 
+        .logo-gobernacion,
         .logo-uniempresarial {
-            width: 420px;
-            max-width: 100%;
-            height: auto;
-
             display: block;
+            width: auto;
+            height: 100px;
+            max-width: 45%;
+            object-fit: contain;
         }
 
 
@@ -287,11 +293,10 @@
         .texto-principal {
             max-width: 850px;
             margin: 0 0 20px;
-
+            text-align: justify;
             color: var(--texto);
-
             font-size: 1.05rem;
-            line-height: 1.75;
+            line-height: 1.7;
         }
 
 
@@ -422,19 +427,19 @@
                 box-shadow 0.35s ease;
         }
 
-        .sector-card:hover {
+        /* .sector-card:hover {
             transform: translateY(-7px);
 
             box-shadow:
                 0 18px 40px rgba(30, 60, 45, 0.13);
-        }
+        } */
 
         .sector-icono {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
             display: block;
-
-            margin-bottom: 14px;
-
-            font-size: 2rem;
+            margin: 0 auto 10px;
         }
 
         .sector-card h3 {
@@ -804,9 +809,15 @@
             .contenido-final {
                 padding: 60px 25px;
             }
+            .logo-contenedor {
+                gap: 15px;
+                margin-bottom: 25px;
+            }
 
+            .logo-gobernacion,
             .logo-uniempresarial {
-                width: 100%;
+                height: 70px;
+                max-width: 45%;
             }
 
             .titulo-principal {
@@ -903,11 +914,19 @@
         <div class="contenido-hoja">
 
             <div class="logo-contenedor">
+
+                <img
+                    src="assets/LogoGobernacion.png"
+                    alt="Gobernación de Cundinamarca"
+                    class="logo-gobernacion"
+                >
+
                 <img
                     src="assets/LogoUE.png"
                     alt="Uniempresarial - Fundación Universitaria Empresarial"
                     class="logo-uniempresarial"
                 >
+
             </div>
 
             <h1 class="titulo-principal">
@@ -976,22 +995,38 @@
             <div class="sectores-grid">
 
                 <div class="sector-card">
-                    <span class="sector-icono">⛏</span>
+                    <img
+                        src="assets/iconos/minero.png"
+                        alt="Sector Minero"
+                        class="sector-icono" 
+                    >
                     <h3>Minero</h3>
                 </div>
 
                 <div class="sector-card">
-                    <span class="sector-icono">🧳</span>
+                    <img
+                        src="assets/iconos/turistico.png"
+                        alt="Sector Turístico"
+                        class="sector-icono"
+                    >
                     <h3>Turístico</h3>
                 </div>
 
                 <div class="sector-card">
-                    <span class="sector-icono">◈</span>
+                    <img
+                        src="assets/iconos/curtiembre.png"
+                        alt="Sector Curtiembre"
+                        class="sector-icono"
+                    >
                     <h3>Curtiembre</h3>
                 </div>
 
                 <div class="sector-card">
-                    <span class="sector-icono">🥛</span>
+                    <img
+                        src="assets/iconos/lacteo.png"
+                        alt="Sector Lácteo"
+                        class="sector-icono"
+                    >
                     <h3>Lácteo</h3>
                 </div>
 
@@ -1083,7 +1118,7 @@
                         border: 1px solid #e4ece6;
                     "
                 >
-                    Economía circular y sostenibilidad
+                    Fundamentos y principios de economía circular y sostenibilidad.
                 </div>
 
                 <div
@@ -1093,7 +1128,7 @@
                         border: 1px solid #e4ece6;
                     "
                 >
-                    Uso eficiente de recursos
+                    Uso eficiente de recursos (agua, energía y materiales).
                 </div>
 
                 <div
@@ -1103,7 +1138,7 @@
                         border: 1px solid #e4ece6;
                     "
                 >
-                    Producción sostenible
+                    Producción sostenible y competitividad empresarial.
                 </div>
 
                 <div
@@ -1113,7 +1148,7 @@
                         border: 1px solid #e4ece6;
                     "
                 >
-                    Innovación y modelos de negocio
+                    Herramientas para el análisis y mejora de procesos.
                 </div>
 
                 <div
@@ -1123,7 +1158,7 @@
                         border: 1px solid #e4ece6;
                     "
                 >
-                    Gestión y valorización de residuos
+                    Modelos de negocio sostenibles e innovación.
                 </div>
 
                 <div
@@ -1133,7 +1168,27 @@
                         border: 1px solid #e4ece6;
                     "
                 >
-                    Indicadores ambientales
+                    Estrategias de aprovechamiento, valorización y gestión de residuos.
+                </div>
+
+                <div
+                    style="
+                        color: var(--texto);
+                        background: #f5f9f6;
+                        border: 1px solid #e4ece6;
+                    "
+                >
+                    Casos prácticos y experiencias aplicadas por sector.
+                </div>
+
+                <div
+                    style="
+                        color: var(--texto);
+                        background: #f5f9f6;
+                        border: 1px solid #e4ece6;
+                    "
+                >
+                    Herramientas de análisis de sostenibilidad e indicadores ambientales.
                 </div>
 
             </div>
@@ -1168,11 +1223,11 @@
             <div class="fechas">
 
                 <div class="fecha-dia">
-                    <span>01</span>
+                    <span>7</span>
                 </div>
 
                 <div class="fecha-texto">
-                    <strong>y 2 de septiembre</strong>
+                    <strong> 8 y 9 de septiembre</strong>
 
                     <p>
                         Inscripciones abiertas en 2026

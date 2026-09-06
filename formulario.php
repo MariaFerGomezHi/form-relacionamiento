@@ -604,6 +604,8 @@
                             class="form-control"
                             placeholder="Ingrese nombres y apellidos completos"
                             required
+                            pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]+"
+                            title="Ingrese solo letras y espacios"
                         >
 
                     </div>
@@ -625,6 +627,9 @@
                                     class="form-control"
                                     placeholder="Ingrese el número de documento"
                                     required
+                                    inputmode="numeric"
+                                    pattern="[0-9]+"
+                                    title="Ingrese únicamente números"
                                 >
 
                             </div>
@@ -646,6 +651,9 @@
                                     class="form-control"
                                     placeholder="Ejemplo: 3001234567"
                                     required
+                                    inputmode="numeric"
+                                    pattern="[0-9]{7,15}"
+                                    title="Ingrese únicamente números, entre 7 y 15 dígitos"
                                 >
 
                             </div>
@@ -751,6 +759,8 @@
                                     class="form-control"
                                     placeholder="Ejemplo: 900123456-7"
                                     required
+                                    pattern="[0-9]+-[0-9]"
+                                    title="Ingrese el NIT en formato 900123456-7"
                                 >
 
                             </div>
@@ -771,6 +781,9 @@
                                     name="telefono_empresa"
                                     class="form-control"
                                     required
+                                    inputmode="numeric"
+                                    pattern="[0-9]{7,15}"
+                                    title="Ingrese únicamente números, entre 7 y 15 dígitos"
                                 >
 
                             </div>
@@ -815,6 +828,9 @@
                                     name="documento_representante"
                                     class="form-control"
                                     required
+                                    inputmode="numeric"
+                                    pattern="[0-9]+"
+                                    title="Ingrese únicamente números"
                                 >
 
                             </div>
@@ -954,6 +970,7 @@
                             name="numero_empleados"
                             class="form-control"
                             min="1"
+                            step="1"
                             required
                         >
 
@@ -1229,28 +1246,173 @@ function showStep(n) {
 
 }
 
+// =====================================
+// RESTRINGIR LO QUE SE PUEDE ESCRIBIR
+// =====================================
+
+// Campos que solo deben permitir letras y espacios
+const camposTexto = [
+    "nombres",
+    "cargo",
+    "razon_social",
+    "representante_legal",
+    "municipio"
+];
+
+camposTexto.forEach(function(nombre) {
+
+    const campo = document.querySelector('[name="' + nombre + '"]');
+
+    campo.addEventListener("keydown", function(event) {
+
+        // Bloquea las teclas numéricas
+        if (/^[0-9]$/.test(event.key)) {
+            event.preventDefault();
+        }
+
+    });
+
+});
+
+
+// Campos que solo deben permitir números
+const camposNumericos = [
+    "documento_participante",
+    "telefono_participante",
+    "telefono_empresa",
+    "documento_representante"
+];
+
+camposNumericos.forEach(function(nombre) {
+
+    const campo = document.querySelector('[name="' + nombre + '"]');
+
+    campo.addEventListener("keydown", function(event) {
+
+        // Permite teclas especiales:
+        // Backspace, Delete, Tab, flechas, etc.
+        const teclasPermitidas = [
+            "Backspace",
+            "Delete",
+            "Tab",
+            "ArrowLeft",
+            "ArrowRight",
+            "Home",
+            "End"
+        ];
+
+        if (teclasPermitidas.includes(event.key)) {
+            return;
+        }
+
+        // Si NO es un número, no permite escribirlo
+        if (!/^[0-9]$/.test(event.key)) {
+            event.preventDefault();
+        }
+
+    });
+
+});
 
 function validarPaso() {
 
-    const inputs =
-        steps[currentStep].querySelectorAll(
-            "input, select"
-        );
-
+    const inputs = steps[currentStep].querySelectorAll(
+        "input, select"
+    );
 
     for (const input of inputs) {
 
+        // Elimina espacios al inicio y al final
+        if (input.type !== "file") {
+            input.value = input.value.trim();
+        }
+
+        // Validación para campos de texto
+        if (
+            input.name === "nombres" ||
+            input.name === "cargo" ||
+            input.name === "razon_social" ||
+            input.name === "representante_legal" ||
+            input.name === "municipio"
+        ) {
+
+            const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]+$/;
+
+            if (
+                input.value !== "" &&
+                !soloLetras.test(input.value)
+            ) {
+                alert("Este campo solo puede contener letras y espacios.");
+
+                input.focus();
+                return false;
+            }
+        }
+
+        // Validación para documentos
+        if (
+            input.name === "documento_participante" ||
+            input.name === "documento_representante"
+        ) {
+
+            if (
+                input.value !== "" &&
+                !/^[0-9]+$/.test(input.value)
+            ) {
+                alert("El número de documento solo puede contener números.");
+
+                input.focus();
+                return false;
+            }
+        }
+
+        // Validación para teléfonos
+        if (
+            input.name === "telefono_participante" ||
+            input.name === "telefono_empresa"
+        ) {
+
+            if (
+                input.value !== "" &&
+                !/^[0-9]{7,15}$/.test(input.value)
+            ) {
+                alert(
+                    "El teléfono debe contener únicamente números y tener entre 7 y 15 dígitos."
+                );
+
+                input.focus();
+                return false;
+            }
+        }
+
+        // Validación del correo
+        if (input.name === "correo") {
+
+            const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (
+                input.value !== "" &&
+                !correoValido.test(input.value)
+            ) {
+                alert(
+                    "Ingrese un correo electrónico válido. Ejemplo: nombre@correo.com"
+                );
+
+                input.focus();
+                return false;
+            }
+        }
+
+        // Validación de campos obligatorios
         if (!input.checkValidity()) {
 
             input.reportValidity();
 
             return false;
         }
-
     }
 
     return true;
-
 }
 
 
